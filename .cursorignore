@@ -1,0 +1,21 @@
+# Maven build output
+target/
+**/target/
+
+# Local Maven repository cache
+.m2/
+
+# Environment files and secrets
+**/.env
+**/.env.*
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Large generated or local assets
+*.class
+logs/
+cgds-data/
+**/build/
+dependency-reduced-pom.xml
