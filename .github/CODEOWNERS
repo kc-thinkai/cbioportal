@@ -1,0 +1,10 @@
+# Review routing for cBioPortal backend (https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
+
+# Maven build and dependency management
+/pom.xml @cBioPortal/backend
+
+# Backend Java source
+/src/main/java/ @cBioPortal/backend
+
+# GitHub Actions workflows and CI
+/.github/workflows/ @cBioPortal/devops
