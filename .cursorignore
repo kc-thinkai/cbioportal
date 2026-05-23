@@ -1,0 +1,46 @@
+# Build outputs (Maven modules)
+target/
+**/target/
+
+# Dependencies
+node_modules/
+
+# Secrets and local configuration
+.env
+.env.*
+*.pem
+*.key
+*.crt
+security.properties
+**/application.properties
+**/portal.properties
+**/importer.properties
+**/log4j.properties
+**/build.properties
+**/db.properties
+
+# Local database dumps and caches
+*.sql
+*.sql.gz
+*.dump
+*.sqlite
+*.db
+cgds-data/
+portal/db/
+
+# Logs and runtime artifacts
+*.log
+logs/
+*.class
+
+# IDE and editor metadata
+.idea/
+.vscode/
+.settings/
+*.iml
+
+# Large or generated reference content
+OPEN-SOURCE-DOCUMENTATION
+
+# Git internals
+.git/
