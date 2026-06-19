@@ -59,3 +59,15 @@ An ArchUnit test (`EndpointAuthorizationArchTest`) verifies that all `@RequestMa
 - Follow existing patterns in the codebase when adding new endpoints or services
 - New features should use the new persistence stack (domain/infrastructure layers), not the legacy service layer
 - PRs should include test coverage for new functionality
+
+## Canonical Example (Golden Path)
+
+When adding domain-layer features, follow this use-case + test pattern:
+
+| Layer | Example |
+|-------|---------|
+| Use case | `src/main/java/org/cbioportal/domain/cancerstudy/usecase/GetCancerStudyMetadataUseCase.java` |
+| Use case unit test | `src/test/java/org/cbioportal/cancerstudy/usecase/GetCancerStudyMetadataUseCaseTest.java` |
+| Repository integration test | `src/integration/java/org/cbioportal/infrastructure/repository/clickhouse/cancerstudy/ClickhouseCancerStudyRepositoryIntegrationTest.java` |
+
+The use case injects a domain repository interface, delegates persistence to it, and is covered by a Mockito unit test. The ClickHouse repository implementation is verified against a real database in `src/integration/` (extends `AbstractClickhouseIntegrationTest`). New domain code belongs under `src/main/java/org/cbioportal/domain/` with matching tests under `src/test/java/org/cbioportal/domain/`.
