@@ -4,9 +4,37 @@ This file contains rules and conventions that AI coding agents (Claude Code, Cop
 
 ## Build & Test
 
-- Build: `mvn install -DskipTests`
-- Run all tests: `mvn integration-test`
+Use the Maven wrapper (`./mvnw`) for reproducible builds; a system Maven install is optional.
+
+- Build: `./mvnw install -DskipTests`
+- Unit tests: `./mvnw test`
+- Integration tests: `./mvnw verify -Pintegration-test` (requires env vars; see `.env.example`)
+- Lint/format: `./mvnw spotless:check` / `./mvnw spotless:apply`
 - All new development targets the `master` branch (v7)
+
+## Configuration
+
+Local settings are split between environment variables and Spring property files.
+
+- **Environment variables:** copy `.env.example` to `.env` (or `dev/.env` for Docker Compose) and set required values. Integration and E2E tests read `TEST_DB_*` and `CBIOPORTAL_URL` from the environment.
+- **Application properties:** copy `src/main/resources/application.properties.EXAMPLE` → `application.properties` and `src/main/resources/security.properties.EXAMPLE` → `security.properties` (both are gitignored). Database, auth, and portal skin settings live here.
+
+### Spring Boot profiles (`spring.profiles.active`)
+
+| Profile | Purpose |
+|---------|---------|
+| `clickhouse` | v7 default backend; ClickHouse column-store APIs (CI uses `--spring.profiles.active=clickhouse`) |
+| `dbcp` | Legacy study importer only (`cbioportal-core`; not used by the web app) |
+
+Pass at runtime, e.g. `java -jar target/cbioportal-exec.jar --spring.profiles.active=clickhouse`.
+
+### Maven profiles (`-P`)
+
+| Profile | Purpose | Command |
+|---------|---------|---------|
+| *(default)* | Unit tests only | `./mvnw test` |
+| `integration-test` | DB / Spring integration tests | `./mvnw verify -Pintegration-test` |
+| `e2e-test` | JavaScript API E2E tests | `./mvnw verify -Pe2e-test` |
 
 ## Endpoint Authorization (Security-Critical)
 
