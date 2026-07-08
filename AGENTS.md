@@ -2,6 +2,32 @@
 
 This file contains rules and conventions that AI coding agents (Claude Code, Copilot, Cursor, etc.) must follow when contributing to this project.
 
+## Project Context
+
+Long-lived project documentation and code organization live in several places:
+
+| Location | Contents |
+|----------|----------|
+| **`AGENTS.md`** (this file) | Agent conventions, security rules, and golden-path examples |
+| **[`docs/`](docs/)** | Full project documentation — start at [`docs/README.md`](docs/README.md). Key developer sections: [`docs/development/`](docs/development/) (backend organization, feature development, security), [`docs/deployment/`](docs/deployment/), and [`docs/ai-integrations/`](docs/ai-integrations/) |
+| **[`README.md`](README.md)** | Backend setup, branching/release strategy, and the **[Testing Overview](README.md#testing-overview)** (unit, integration, and E2E layers, directory layout, env vars, Maven profiles) |
+| **Module READMEs** | Focused context for specific areas: [`application/security/README.md`](src/main/java/org/cbioportal/application/security/README.md), [`application/file/README.md`](src/main/java/org/cbioportal/application/file/README.md), [`src/e2e/js/README.md`](src/e2e/js/README.md) |
+
+### Domain package layout
+
+New features use the domain/infrastructure stack (not the legacy `service`/`persistence-mybatis` layers):
+
+| Path | Purpose |
+|------|---------|
+| `src/main/java/org/cbioportal/domain/<context>/` | Bounded contexts (e.g. `cancerstudy/`, `sample/`, `patient/`, `mutation/`, `clinical_data/`, `genomic_data/`) |
+| `.../domain/<context>/usecase/` | Use-case classes (business logic entry points) |
+| `.../domain/<context>/repository/` | Domain repository interfaces |
+| `src/main/java/org/cbioportal/infrastructure/repository/` | Repository implementations (e.g. ClickHouse) |
+| `src/test/java/org/cbioportal/domain/` | Use-case unit tests (Mockito) |
+| `src/integration/java/org/cbioportal/infrastructure/repository/` | Repository integration tests against real databases |
+
+For the legacy Maven module structure (web, service, persistence), see [`docs/development/Backend-Code-Organization.md`](docs/development/Backend-Code-Organization.md).
+
 ## Build & Test
 
 - Build: `mvn install -DskipTests`
