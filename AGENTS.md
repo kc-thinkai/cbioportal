@@ -5,7 +5,8 @@ This file contains rules and conventions that AI coding agents (Claude Code, Cop
 ## Build & Test
 
 - Build: `mvn install -DskipTests`
-- Run all tests: `mvn integration-test`
+- Run all tests: `mvn verify -Pintegration-test`
+- Lint/format check: `mvn spotless:check`
 - All new development targets the `master` branch (v7)
 
 ## Endpoint Authorization (Security-Critical)
